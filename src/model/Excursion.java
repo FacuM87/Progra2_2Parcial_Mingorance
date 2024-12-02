@@ -22,15 +22,26 @@ public abstract class Excursion implements Serializable {
 
     public Excursion(String titulo, double precioBase, int cupoMaximo) {
         this.id = contadorId++;
-        this.titulo = titulo;
+        if(titulo == null || titulo.length()<3){
+            throw new IllegalArgumentException("El titulo no puede tener menos de 3 caracteres");
+        } else {
+            this.titulo = titulo;
+        }
+        
         this.precioBase = precioBase;
-        this.cupoMaximo = cupoMaximo;
+        
+        if(cupoMaximo<1){
+            throw new IllegalArgumentException("Cupo maximo no puede ser menor a 1");
+        } else {
+            this.cupoMaximo = cupoMaximo;
+        }
+        
         this.gestorReservas = new GestorReservas(cupoMaximo, this.generarFilePath());
         this.actividades = new ArrayList<>();
     }
 
     public boolean realizarReserva(String cliente) {
-        gestorReservas.realizarReserva(new Reserva(cliente, LocalDate.now().toString(), this.calcularPrecioFinal()));
+        gestorReservas.realizarReserva(new Reserva(cliente, this.id));
         return true;
     }
 
@@ -61,5 +72,23 @@ public abstract class Excursion implements Serializable {
     public int getId() {
         return id;
     }
+
+    public List<String> getActividades() {
+        return actividades;
+    }
+
+    public int getCupoMaximo() {
+        return cupoMaximo;
+    }
+    
+
+    @Override
+    public String toString() {
+        return "Excursion{" + "id=" + id + ", titulo=" + titulo + ", precioBase=" + precioBase + ", cupoMaximo=" + cupoMaximo + ", actividades=" + actividades + '}';
+    }
+    
+    
+    
+    
 
 }

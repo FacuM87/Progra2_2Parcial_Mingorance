@@ -27,6 +27,7 @@ public class ExcursionRepository implements Repository<Excursion>{
         if(existeEnPersistencia){return;}
         this.excursiones.add(excursion);
         this.persistencia.guardarDatos(filePath, excursiones);
+        System.out.println("Excursion agregada exitosamente con id "+excursion.getId());
     }
 
     @Override

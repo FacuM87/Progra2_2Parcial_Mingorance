@@ -28,6 +28,9 @@ public class GestorExcursiones {
         return excursionesRepository.findBy(e -> e.calcularPrecioFinal()>=precioMin);
     }
     
+    public List<Excursion> traerExcursiones(){
+        return excursionesRepository.getAll();
+    }
     
     
     
